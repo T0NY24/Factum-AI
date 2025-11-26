@@ -1,0 +1,11 @@
+{
+    "name": "get-presigned-url",
+    "version": "1.0.0",
+    "description": "Lambda function to generate S3 presigned URLs for image upload",
+    "main": "index.js",
+    "type": "module",
+    "dependencies": {
+        "@aws-sdk/client-s3": "^3.699.0",
+        "@aws-sdk/s3-request-presigner": "^3.699.0"
+    }
+}

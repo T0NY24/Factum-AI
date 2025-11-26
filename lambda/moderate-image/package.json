@@ -1,0 +1,10 @@
+{
+    "name": "moderate-image",
+    "version": "1.0.0",
+    "description": "Lambda function to moderate images using Amazon Rekognition",
+    "main": "index.js",
+    "type": "module",
+    "dependencies": {
+        "@aws-sdk/client-rekognition": "^3.699.0"
+    }
+}
