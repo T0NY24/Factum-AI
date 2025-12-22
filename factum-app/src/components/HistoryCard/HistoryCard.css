@@ -1,0 +1,71 @@
+.history-card {
+    border-radius: 0.5rem;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+.history-card:hover {
+    transform: translateY(-2px);
+}
+
+.history-card.safe {
+    border: 4px solid #16a34a;
+}
+
+.history-card.unsafe {
+    border: 4px solid #dc2626;
+}
+
+.history-card-image {
+    height: 12rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.history-card.safe .history-card-image {
+    background: linear-gradient(to bottom right, #dbeafe, #d1fae5);
+}
+
+.history-card.unsafe .history-card-image {
+    background: linear-gradient(to bottom right, #fee2e2, #fed7aa);
+}
+
+.history-icon {
+    width: 4rem;
+    height: 4rem;
+}
+
+.history-icon.safe {
+    color: #16a34a;
+}
+
+.history-icon.unsafe {
+    color: #dc2626;
+}
+
+.history-card-info {
+    padding: 0.75rem;
+    background-color: white;
+}
+
+.history-date {
+    font-size: 0.75rem;
+    color: #6b7280;
+    margin: 0 0 0.25rem 0;
+}
+
+.history-status {
+    font-size: 0.875rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.history-status.safe {
+    color: #16a34a;
+}
+
+.history-status.unsafe {
+    color: #dc2626;
+}

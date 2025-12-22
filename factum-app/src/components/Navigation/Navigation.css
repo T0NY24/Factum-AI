@@ -1,0 +1,48 @@
+.navigation-container {
+    background-color: white;
+    border-bottom: 1px solid #e5e7eb;
+    padding: 1.5rem;
+}
+
+.navigation-content {
+    max-width: 1280px;
+    margin: 0 auto;
+}
+
+.navigation-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #111827;
+    margin-bottom: 1rem;
+}
+
+.navigation-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.nav-button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #f3f4f6;
+    color: #374151;
+}
+
+.nav-button:hover {
+    background-color: #e5e7eb;
+}
+
+.nav-button.active {
+    background-color: #2563eb;
+    color: white;
+}
+
+.nav-button.active:hover {
+    background-color: #1d4ed8;
+}

@@ -1,0 +1,157 @@
+.screen5-container {
+    background-color: white;
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.screen5-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.screen5-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #111827;
+    margin: 0;
+}
+
+.screen5-filters {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.filter-button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.filter-button {
+    background-color: #e5e7eb;
+    color: #374151;
+}
+
+.filter-button:hover {
+    background-color: #d1d5db;
+}
+
+.filter-button.active {
+    background-color: #e5e7eb;
+    color: #374151;
+    font-weight: 600;
+}
+
+.filter-button.safe {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.filter-button.safe.active {
+    background-color: #bbf7d0;
+}
+
+.filter-button.unsafe {
+    background-color: #fee2e2;
+    color: #991b1b;
+}
+
+.filter-button.unsafe.active {
+    background-color: #fecaca;
+}
+
+.filter-dot {
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+}
+
+.filter-dot.safe {
+    background-color: #16a34a;
+}
+
+.filter-dot.unsafe {
+    background-color: #dc2626;
+}
+
+.screen5-empty {
+    text-align: center;
+    padding: 4rem 2rem;
+    color: #6b7280;
+}
+
+.screen5-empty p {
+    margin: 0.5rem 0;
+}
+
+.empty-hint {
+    font-size: 0.875rem;
+    color: #9ca3af;
+}
+
+.screen5-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+
+.screen5-stats {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.stat-item {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.stat-label {
+    color: #6b7280;
+    font-weight: 500;
+}
+
+.stat-value {
+    font-weight: 700;
+    color: #111827;
+}
+
+.stat-value.safe {
+    color: #16a34a;
+}
+
+.stat-value.unsafe {
+    color: #dc2626;
+}
+
+@media (max-width: 1024px) {
+    .screen5-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .screen5-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 480px) {
+    .screen5-grid {
+        grid-template-columns: 1fr;
+    }
+}

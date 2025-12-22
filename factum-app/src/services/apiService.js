@@ -43,12 +43,14 @@ export const uploadToS3 = async (presignedUrl, file) => {
 /**
  * Request image moderation analysis from API Gateway
  * @param {string} imageKey - S3 key of the uploaded image
+ * @param {number} threshold - Optional threshold for moderation (0-100)
  * @returns {Promise<{isInappropriate: boolean, labels: Array, confidence: number}>}
  */
-export const moderateImage = async (imageKey) => {
+export const moderateImage = async (imageKey, threshold = 85) => {
     try {
         const response = await axios.post(`${API_BASE_URL}/moderate`, {
             imageKey,
+            threshold
         });
         return response.data;
     } catch (error) {
@@ -56,3 +58,4 @@ export const moderateImage = async (imageKey) => {
         throw new Error('Error al analizar la imagen.');
     }
 };
+

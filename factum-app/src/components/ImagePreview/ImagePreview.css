@@ -1,0 +1,81 @@
+.image-preview-container {
+    background-color: #f3f4f6;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    position: relative;
+    height: 24rem;
+}
+
+.image-preview-container.blurred {
+    background-color: #1f2937;
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.preview-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #9ca3af;
+    font-size: 1.125rem;
+}
+
+.blur-overlay {
+    position: absolute;
+    inset: 0;
+    backdrop-filter: blur(60px);
+    background-color: rgba(156, 163, 175, 0.5);
+}
+
+.blur-content {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    z-index: 10;
+}
+
+.blur-icon {
+    width: 5rem;
+    height: 5rem;
+    margin-bottom: 1rem;
+}
+
+.blur-icon.alert {
+    color: #ef4444;
+}
+
+.blur-icon.eye {
+    width: 4rem;
+    height: 4rem;
+    margin-bottom: 1rem;
+}
+
+.blur-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.reveal-btn {
+    background-color: #dc2626;
+    color: white;
+    padding: 0.5rem 1.5rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.reveal-btn:hover {
+    background-color: #b91c1c;
+}
