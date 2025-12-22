@@ -130,14 +130,14 @@ Factum-AI/
 │   │   ├── App.css                  # Estilos principales
 │   │   ├── main.jsx                 # Entry point de React
 │   │   └── index.css                # Estilos globales
-│   │
+│   │   └── MockupReference.jsx      # Componente de referencia de mockup
 │   ├── public/                      # Archivos estáticos
 │   ├── .env                         # Variables de entorno (NO en git)
 │   ├── .env.example                 # Plantilla de variables de entorno
 │   ├── package.json                 # Dependencias del frontend
 │   ├── vite.config.js               # Configuración de Vite
 │   └── README.md
-│
+│   └── AGENT.MD                         # 👈 Este documento
 ├── lambda/                          # ⚡ BACKEND - Funciones AWS Lambda
 │   ├── get-presigned-url/
 │   │   ├── index.js                 # Generación de URLs S3 firmadas
@@ -152,7 +152,7 @@ Factum-AI/
 │   └── DEPLOYMENT.md                # Guía de despliegue a producción
 │
 ├── README.md                        # Documentación general del proyecto
-└── AGENT.MD                         # 👈 Este documento
+
 ```
 
 ---
