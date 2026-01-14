@@ -3,9 +3,12 @@ import { SCREEN_NAMES } from '../../utils/constants';
 import './Navigation.css';
 
 const Navigation = ({ currentScreen, onNavigate }) => {
-    const screens = Object.entries(SCREEN_NAMES).map(([id, name]) => ({
-        id: parseInt(id),
-        name
+    // Solo mostrar pantallas navegables manualmente: Upload (1), Historial (5), Config (6)
+    // Las pantallas 2, 3, 4 son transicionales y el flujo las controla automáticamente
+    const navigableScreens = [1, 5, 6];
+    const screens = navigableScreens.map(id => ({
+        id,
+        name: SCREEN_NAMES[id]
     }));
 
     return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Shield } from 'lucide-react';
+import { Shield, RotateCcw } from 'lucide-react';
 import ImagePreview from '../../components/ImagePreview/ImagePreview';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import './Screen3.css';
@@ -67,7 +67,8 @@ const Screen3 = ({ moderationResult, imageUrl, onReset }) => {
                     </div>
 
                     <button className="screen3-button" onClick={onReset}>
-                        Aprobar y Publicar
+                        <RotateCcw size={18} style={{ marginRight: '8px' }} />
+                        Analizar otra imagen
                     </button>
                 </div>
             </div>

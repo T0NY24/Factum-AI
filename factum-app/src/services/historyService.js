@@ -8,18 +8,38 @@ import { generateId } from '../utils/helpers';
  */
 export const saveToHistory = (imageData, result) => {
     try {
+        console.log('📝 saveToHistory called with:', { imageData, result });
+
+        // Validaciones defensivas
+        if (!imageData || !result) {
+            console.error('❌ Invalid data passed to saveToHistory');
+            return;
+        }
+
         const history = getHistory();
+
+        // 🛑 EVITAR DUPLICADOS: Verificar si ya existe un ítem con el mismo ID
+        const alreadyExists = history.some(item => item.id === imageData.id);
+
+        if (alreadyExists) {
+            console.warn('⚠️ Intento de guardar duplicado prevenido:', imageData.id);
+            return; // Detenemos la función aquí
+        }
+
         const newEntry = {
-            id: generateId(),
-            imageName: imageData.name,
+            id: imageData.id || generateId(), // Usar UUID de imageData o generar uno nuevo
+            imageName: imageData.name || 'Imagen sin nombre',
             imageUrl: imageData.url,
             imageKey: imageData.key,
-            status: result.isInappropriate ? 'unsafe' : 'safe',
-            confidence: result.confidence,
-            labels: result.labels,
+            // Soporte para 3 niveles: 'safe', 'suggestive', 'unsafe'
+            status: result.status || (result.isInappropriate ? 'unsafe' : 'safe'),
+            confidence: result.confidence || 0,
+            labels: result.labels || [],
             date: new Date().toISOString(),
             timestamp: Date.now()
         };
+
+        console.log('📝 New entry:', newEntry);
 
         history.unshift(newEntry);
 
@@ -27,6 +47,8 @@ export const saveToHistory = (imageData, result) => {
         const limitedHistory = history.slice(0, 100);
 
         localStorage.setItem(STORAGE_KEYS.HISTORY, JSON.stringify(limitedHistory));
+
+        console.log('✅ History saved successfully, total items:', limitedHistory.length);
     } catch (error) {
         console.error('Error saving to history:', error);
     }

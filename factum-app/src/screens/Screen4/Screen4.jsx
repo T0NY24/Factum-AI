@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { X } from 'lucide-react';
+import { X, RotateCcw } from 'lucide-react';
 import ImagePreview from '../../components/ImagePreview/ImagePreview';
 import ProgressBar from '../../components/ProgressBar/ProgressBar';
 import './Screen4.css';
@@ -77,10 +77,8 @@ const Screen4 = ({ moderationResult, imageUrl, onReset }) => {
 
                     <div className="screen4-actions">
                         <button className="screen4-button primary" onClick={onReset}>
-                            Rechazar y Bloquear
-                        </button>
-                        <button className="screen4-button secondary" onClick={onReset}>
-                            Revisar Manualmente
+                            <RotateCcw size={18} style={{ marginRight: '8px' }} />
+                            Analizar otra imagen
                         </button>
                     </div>
                 </div>

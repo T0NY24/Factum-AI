@@ -1,0 +1,128 @@
+.screen-suggestive-container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.demo-banner.warning {
+    background: linear-gradient(to right, #fef3c7, #fde68a);
+    border: 1px solid #f59e0b;
+    color: #92400e;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.screen-suggestive-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    border: 2px solid #f59e0b;
+}
+
+.screen-suggestive-image {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom right, #fef3c7, #fde68a);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    min-height: 400px;
+}
+
+.screen-suggestive-results {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.screen-suggestive-header {
+    text-align: center;
+}
+
+.screen-suggestive-icon {
+    width: 4rem;
+    height: 4rem;
+    color: #f59e0b;
+    margin: 0 auto 1rem;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.6;
+    }
+}
+
+.screen-suggestive-title {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: #d97706;
+    margin: 0 0 0.5rem 0;
+}
+
+.screen-suggestive-subtitle {
+    color: #92400e;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.screen-suggestive-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.screen-suggestive-info {
+    background: #fffbeb;
+    border: 1px solid #fcd34d;
+    border-radius: 0.5rem;
+    padding: 1rem;
+    text-align: center;
+}
+
+.screen-suggestive-info p {
+    margin: 0;
+    color: #92400e;
+    font-size: 0.875rem;
+}
+
+.screen-suggestive-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem 2rem;
+    background: linear-gradient(to right, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.screen-suggestive-button:hover {
+    background: linear-gradient(to right, #d97706, #b45309);
+    transform: translateY(-1px);
+}
+
+@media (max-width: 768px) {
+    .screen-suggestive-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .screen-suggestive-image {
+        min-height: 300px;
+    }
+}

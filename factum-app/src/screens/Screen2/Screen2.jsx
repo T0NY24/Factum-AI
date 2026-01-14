@@ -13,23 +13,15 @@ const Screen2 = ({ imageData, onAnalysisComplete, onNavigate }) => {
                 const moderationResult = await analyzeImage(imageData.key);
 
                 if (moderationResult) {
-                    // Notificar al padre
+                    // Notificar al padre - App.jsx maneja la navegación con lógica de 3 niveles
+                    // NO navegamos aquí para evitar conflictos con la clasificación sugestiva
                     onAnalysisComplete(moderationResult);
-
-                    // Navegar automáticamente según el resultado
-                    setTimeout(() => {
-                        if (moderationResult.isInappropriate) {
-                            onNavigate(4); // Screen 4 - Contenido Inapropiado
-                        } else {
-                            onNavigate(3); // Screen 3 - Contenido Seguro
-                        }
-                    }, 1000);
                 }
             };
 
             performAnalysis();
         }
-    }, [imageData, analyzeImage, onAnalysisComplete, onNavigate]);
+    }, [imageData, analyzeImage, onAnalysisComplete]);
 
     return (
         <div className="screen2-wrapper">

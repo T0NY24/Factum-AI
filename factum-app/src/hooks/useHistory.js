@@ -49,6 +49,7 @@ export const useHistory = () => {
         return {
             total: allHistory.length,
             safe: allHistory.filter(item => item.status === STATUS_SAFE).length,
+            suggestive: allHistory.filter(item => item.status === 'suggestive').length,
             unsafe: allHistory.filter(item => item.status === STATUS_UNSAFE).length
         };
     }, []);

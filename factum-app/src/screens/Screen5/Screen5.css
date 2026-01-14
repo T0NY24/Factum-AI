@@ -7,10 +7,15 @@
 
 .screen5-header {
     display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.screen5-title-row {
+    display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 1.5rem;
-    flex-wrap: wrap;
     gap: 1rem;
 }
 
@@ -19,6 +24,25 @@
     font-weight: 700;
     color: #111827;
     margin: 0;
+}
+
+.clear-history-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background-color: #fee2e2;
+    color: #dc2626;
+    border: none;
+    border-radius: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.clear-history-btn:hover {
+    background-color: #fecaca;
 }
 
 .screen5-filters {
@@ -62,6 +86,15 @@
     background-color: #bbf7d0;
 }
 
+.filter-button.suggestive {
+    background-color: #fef3c7;
+    color: #92400e;
+}
+
+.filter-button.suggestive.active {
+    background-color: #fde68a;
+}
+
 .filter-button.unsafe {
     background-color: #fee2e2;
     color: #991b1b;
@@ -79,6 +112,10 @@
 
 .filter-dot.safe {
     background-color: #16a34a;
+}
+
+.filter-dot.suggestive {
+    background-color: #f59e0b;
 }
 
 .filter-dot.unsafe {
@@ -132,6 +169,10 @@
 
 .stat-value.safe {
     color: #16a34a;
+}
+
+.stat-value.suggestive {
+    color: #f59e0b;
 }
 
 .stat-value.unsafe {

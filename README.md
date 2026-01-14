@@ -1,241 +1,271 @@
-# Factum AI - Sistema de Moderación de Contenido
+# Factum AI
 
-Sistema de clasificación inteligente de contenido multimedia utilizando React.js y AWS (Rekognition, Lambda, S3, API Gateway) para detectar contenido inapropiado en imágenes.
+Sistema de moderación de contenido multimedia mediante inteligencia artificial. Utiliza Amazon Rekognition para clasificar imágenes en tres niveles de seguridad.
 
-## 🎯 Características
+---
 
-- ✨ **Interfaz moderna** con diseño premium y animaciones fluidas
-- 🎯 **Detección inteligente** de contenido inapropiado usando Amazon Rekognition
-- ⚡ **Procesamiento en tiempo real** con feedback visual
-- 🔒 **Seguro y escalable** utilizando servicios de AWS
-- 📊 **Resultados detallados** con niveles de confianza y etiquetas
+## Instalación
 
-## 🏗️ Arquitectura
+### Requisitos Previos
 
-```mermaid
-sequenceDiagram
-    participant U as Usuario (React)
-    participant AG as API Gateway
-    participant L1 as Lambda: Presigned URL
-    participant S3 as S3 Bucket
-    participant L2 as Lambda: Moderate
-    participant R as Rekognition
+- Node.js 18 o superior
+- npm 9 o superior  
+- Cuenta AWS con acceso a S3, Lambda, API Gateway y Rekognition
+- AWS CLI configurado (opcional)
 
-    U->>AG: 1. Solicitar URL de carga
-    AG->>L1: Invocar función
-    L1->>L1: Generar URL prefirmada
-    L1->>U: 2. Retornar URL
-    U->>S3: 3. Subir imagen directamente
-    S3->>U: Confirmación
-    U->>AG: 4. Solicitar análisis (imageKey)
-    AG->>L2: Invocar función
-    L2->>R: 5. DetectModerationLabels
-    R->>L2: 6. Etiquetas y confianza
-    L2->>L2: 7. Evaluar (umbral 70%)
-    L2->>U: 8. Resultado (seguro/inapropiado)
-```
-
-## 📁 Estructura del Proyecto
-
-```
-Factum-AI/
-├── factum-app/                 # Aplicación React
-│   ├── src/
-│   │   ├── components/
-│   │   │   ├── ImageUploader.jsx      # Componente de carga
-│   │   │   ├── ImageUploader.css
-│   │   │   ├── ModerationResult.jsx   # Componente de resultados
-│   │   │   └── ModerationResult.css
-│   │   ├── services/
-│   │   │   └── apiService.js          # Llamadas a API Gateway
-│   │   ├── App.jsx                    # Componente principal
-│   │   ├── App.css
-│   │   └── index.css
-│   ├── .env.example
-│   └── package.json
-│
-├── lambda/                     # Funciones AWS Lambda
-│   ├── get-presigned-url/
-│   │   ├── index.js                   # Generar URL S3
-│   │   └── package.json
-│   └── moderate-image/
-│       ├── index.js                   # Análisis con Rekognition
-│       └── package.json
-│
-└── docs/
-    └── AWS_SETUP.md                   # Guía de configuración AWS
-```
-
-## 🚀 Inicio Rápido
-
-### Prerrequisitos
-
-- Node.js 18+ y npm
-- Cuenta de AWS con acceso a:
-  - S3
-  - Lambda
-  - API Gateway
-  - Rekognition
-- AWS CLI configurado (opcional pero recomendado)
-
-### 1. Clonar e Instalar
+### Paso 1: Clonar el Repositorio
 
 ```bash
-# Clonar el repositorio
 git clone https://github.com/T0NY24/Factum-AI.git
 cd Factum-AI
+```
 
-# Instalar dependencias del frontend
+### Paso 2: Instalar Dependencias del Frontend
+
+```bash
 cd factum-app
 npm install
 ```
 
-### 2. Configurar AWS
+Librerías instaladas automáticamente:
 
-Sigue la guía completa en [docs/AWS_SETUP.md](docs/AWS_SETUP.md) para:
+| Librería | Versión | Función |
+|----------|---------|---------|
+| react | 19.x | Framework de UI |
+| vite | 6.x | Build tool y dev server |
+| axios | 1.x | Cliente HTTP |
+| lucide-react | 0.x | Iconos |
+| react-dropzone | 14.x | Drag and drop de archivos |
+| @aws-sdk/client-s3 | 3.x | SDK de AWS para S3 |
+| @aws-sdk/s3-request-presigner | 3.x | Generador de URLs prefirmadas |
 
-1. Crear bucket S3
-2. Desplegar funciones Lambda
-3. Configurar API Gateway
-4. Establecer permisos IAM
-
-### 3. Configurar Variables de Entorno
+### Paso 3: Configurar Variables de Entorno
 
 ```bash
-# En factum-app/
 cp .env.example .env
 ```
 
-Edita `.env` con tus valores:
+Editar el archivo `.env`:
 
 ```env
 VITE_API_GATEWAY_URL=https://tu-api-id.execute-api.us-east-1.amazonaws.com/prod
 VITE_AWS_REGION=us-east-1
-VITE_S3_BUCKET_NAME=tu-bucket-name
+VITE_S3_BUCKET_NAME=nombre-del-bucket
 ```
 
-### 4. Ejecutar la Aplicación
+### Paso 4: Instalar Dependencias del Backend (Lambda)
 
 ```bash
-# En factum-app/
+# Lambda: Generador de URL Prefirmada
+cd lambda/get-presigned-url
+npm install
+```
+
+Librerías de get-presigned-url:
+
+| Librería | Función |
+|----------|---------|
+| @aws-sdk/client-s3 | Conexión con S3 |
+| @aws-sdk/s3-request-presigner | Generar URLs temporales |
+
+```bash
+# Lambda: Moderación de Imágenes
+cd ../moderate-image
+npm install
+```
+
+Librerías de moderate-image:
+
+| Librería | Función |
+|----------|---------|
+| @aws-sdk/client-rekognition | Análisis de contenido |
+| @aws-sdk/client-s3 | Mover archivos entre carpetas |
+
+### Paso 5: Desplegar en AWS
+
+Empaquetar cada función Lambda:
+
+```bash
+# En lambda/get-presigned-url
+zip -r function.zip .
+
+# En lambda/moderate-image  
+zip -r function.zip .
+```
+
+Subir los archivos `.zip` a AWS Lambda. Configurar variable de entorno:
+- `S3_BUCKET_NAME`: nombre del bucket S3
+
+---
+
+## Ejecución
+
+### Desarrollo Local
+
+```bash
+cd factum-app
 npm run dev
 ```
 
-Abre [http://localhost:5173](http://localhost:5173) en tu navegador.
+Acceder a `http://localhost:5173`
 
-## 🔧 Desarrollo
-
-### Scripts Disponibles
+### Producción
 
 ```bash
-npm run dev      # Iniciar servidor de desarrollo
-npm run build    # Construir para producción
-npm run preview  # Previsualizar build de producción
-npm run lint     # Ejecutar linter
+cd factum-app
+npm run build
+npm run preview
 ```
 
-### Desplegar Funciones Lambda
+Los archivos de producción se generan en `dist/`
 
-```bash
-# Para get-presigned-url
-cd lambda/get-presigned-url
-npm install
-zip -r function.zip .
-# Subir a AWS Lambda desde la consola
+---
 
-# Para moderate-image
-cd lambda/moderate-image
-npm install
-zip -r function.zip .
-# Subir a AWS Lambda desde la consola
+## Funcionamiento
+
+### Flujo de Análisis
+
+1. El usuario carga una imagen
+2. El frontend solicita una URL prefirmada a Lambda
+3. La imagen se sube directamente a S3
+4. Lambda invoca Amazon Rekognition para analizar el contenido
+5. El sistema clasifica la imagen según las etiquetas detectadas
+6. El usuario recibe el resultado con el nivel de riesgo
+
+### Pantallas de Resultado
+
+| Nivel | Pantalla | Acción |
+|-------|----------|--------|
+| Seguro | Verde | Aprobación automática |
+| Sugestivo | Amarillo | Requiere revisión humana |
+| Inseguro | Rojo | Bloqueo automático |
+
+---
+
+## Clasificación de Contenido
+
+El sistema utiliza la taxonomía oficial de Amazon Rekognition para categorizar el contenido en dos grupos principales.
+
+### Contenido Inseguro (Bloqueo Automático)
+
+Contenido que requiere bloqueo inmediato sin intervención humana.
+
+| Categoría | Descripción |
+|-----------|-------------|
+| Hate Symbols | Símbolos de odio, contenido nazi, supremacista |
+| Explicit Nudity | Desnudez explícita |
+| Violence | Violencia física, armas en uso |
+| Visually Disturbing | Gore, accidentes gráficos, mutilaciones |
+| Sexual Activity | Actividad sexual explícita |
+| Graphic Male Nudity | Desnudez masculina gráfica |
+| Graphic Female Nudity | Desnudez femenina gráfica |
+| Illustrated Explicit Nudity | Desnudez explícita ilustrada |
+| Adult Toys | Juguetes para adultos |
+
+### Contenido Sugestivo (Revisión Humana)
+
+Contenido que requiere evaluación por un moderador antes de tomar acción.
+
+| Categoría | Descripción |
+|-----------|-------------|
+| Suggestive | Contenido sexualmente sugestivo |
+| Revealing Clothes | Ropa reveladora, escotes pronunciados |
+| Swimwear or Underwear | Trajes de baño, ropa interior |
+| Female Swimwear or Underwear | Bikinis, lencería femenina |
+| Non-Explicit Nudity | Desnudez no explícita |
+| Partial Nudity | Desnudez parcial |
+| Tobacco | Productos de tabaco |
+| Alcohol | Bebidas alcohólicas |
+| Drugs | Sustancias controladas |
+| Gambling | Contenido de apuestas |
+
+---
+
+## Arquitectura
+
+```
+Usuario (React)
+    |
+    v
+API Gateway --> Lambda: Presigned URL --> S3
+    |
+    v
+API Gateway --> Lambda: Moderate --> Rekognition
+    |
+    v
+Resultado (safe / suggestive / unsafe)
 ```
 
-## 📖 Uso
+### Componentes AWS
 
-1. **Cargar Imagen**: Arrastra una imagen o haz click para seleccionar
-2. **Subir a S3**: La imagen se sube automáticamente usando URL prefirmada
-3. **Análisis**: Amazon Rekognition analiza el contenido
-4. **Resultado**: Recibes feedback visual sobre si la imagen es apropiada o no
+| Servicio | Función |
+|----------|---------|
+| S3 | Almacenamiento temporal de imágenes |
+| Lambda | Procesamiento serverless |
+| API Gateway | Endpoints REST |
+| Rekognition | Análisis de contenido |
+| IAM | Control de acceso |
 
-### Criterios de Moderación
+---
 
-- **Umbral de confianza**: 70%
-- **Categorías detectadas**:
-  - Desnudez explícita
-  - Actividad sexual
-  - Contenido gráfico
-  - Y más categorías de moderación de AWS
+## Estructura del Proyecto
 
-## 🎨 Tecnologías
+```
+Factum-AI/
+├── factum-app/           # Aplicación React
+│   ├── src/
+│   │   ├── components/   # Componentes reutilizables
+│   │   ├── screens/      # Pantallas de la aplicación
+│   │   ├── hooks/        # Custom hooks
+│   │   ├── services/     # Llamadas a API
+│   │   └── utils/        # Utilidades
+│   └── .env
+│
+├── lambda/               # Funciones AWS Lambda
+│   ├── get-presigned-url/
+│   └── moderate-image/
+│
+└── docs/                 # Documentación
+    ├── AWS_SETUP.md
+    └── DEPLOYMENT.md
+```
 
-### Frontend
-- **React 19** - Biblioteca de UI
-- **Vite** - Build tool y dev server
-- **React Dropzone** - Drag & drop de archivos
-- **Axios** - Cliente HTTP
-- **AWS SDK v3** - Integración con S3
+---
 
-### Backend (AWS)
-- **S3** - Almacenamiento de imágenes
-- **Lambda** - Procesamiento serverless
-- **API Gateway** - Endpoints REST
-- **Rekognition** - Detección de contenido inapropiado
-- **CloudWatch** - Logs y monitoreo
-- **IAM** - Gestión de permisos
+## Seguridad
 
-## 🔒 Seguridad
+- URLs prefirmadas con expiración de 5 minutos
+- Validación de tipos de archivo en cliente y servidor
+- Límite de tamaño de archivo: 10MB
+- Políticas IAM de mínimo privilegio
+- CORS configurado para dominios específicos
 
-- ✅ URLs prefirmadas con expiración (5 minutos)
-- ✅ CORS configurado correctamente
-- ✅ Validación de tipos de archivo
-- ✅ Límite de tamaño de archivo (10MB)
-- ✅ Políticas IAM de mínimo privilegio
-- ✅ Lifecycle policy para eliminar archivos antiguos
+---
 
-## 💰 Costos Estimados
+## Costos Estimados
 
-Para uso moderado (~10,000 imágenes/mes):
+Para 10,000 imágenes mensuales:
 
-| Servicio | Costo Mensual |
-|----------|---------------|
+| Servicio | Costo |
+|----------|-------|
 | S3 | $0.50 - $2.00 |
 | Lambda | $1.00 - $3.00 |
 | API Gateway | $3.50 |
 | Rekognition | $10.00 |
-| **Total** | **~$15 - $20/mes** |
+| Total | $15 - $20/mes |
 
-> Nota: Los primeros 12 meses tienen nivel gratuito significativo
-
-## 🐛 Troubleshooting
-
-### Error: "Cannot read properties of undefined"
-- Verifica que las variables de entorno estén configuradas
-- Confirma que API Gateway esté desplegado
-
-### Error: "CORS policy"
-- Verifica configuración CORS en S3
-- Confirma configuración CORS en API Gateway
-
-### Error: "Access Denied"
-- Revisa permisos IAM de las funciones Lambda
-- Confirma que el bucket S3 exista
-
-Para más ayuda, consulta [docs/AWS_SETUP.md](docs/AWS_SETUP.md#troubleshooting)
-
-## 📝 Licencia
-
-Este proyecto es de código abierto y está disponible bajo la licencia MIT.
-
-## 👨‍💻 Autor
-
-**T0NY24** - [GitHub](https://github.com/T0NY24)
-
-## 🙏 Agradecimientos
-
-- Amazon Web Services por los servicios cloud
-- React y Vite por las increíbles herramientas de desarrollo
-- La comunidad de código abierto
+Los primeros 12 meses incluyen nivel gratuito.
 
 ---
 
-**⚠️ Nota**: Este es un proyecto educativo. Para uso en producción, considera implementar autenticación adicional, límites de tasa, y políticas de seguridad más estrictas.
+## Solución de Problemas
+
+| Error | Solución |
+|-------|----------|
+| CORS policy | Verificar configuración CORS en S3 y API Gateway |
+| Access Denied | Revisar permisos IAM de Lambda |
+| Timeout | Aumentar memoria y timeout de Lambda |
+
+Consultar `docs/AWS_SETUP.md` para configuración detallada.
+
+---
