@@ -1,49 +1,103 @@
 .screen6-container {
-    background-color: white;
-    border-radius: 0.75rem;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    background-color: #f8fafc;
+    min-height: 100%;
     padding: 2rem;
-    max-width: 48rem;
-    margin: 0 auto;
+}
+
+.screen6-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.screen6-header-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    color: #3b82f6;
+    flex-shrink: 0;
 }
 
 .screen6-title {
-    font-size: 1.5rem;
+    font-size: 2rem;
     font-weight: 700;
     color: #111827;
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.25rem 0;
 }
 
 .screen6-subtitle {
     color: #6b7280;
-    margin: 0 0 2rem 0;
+    margin: 0;
+    font-size: 0.9375rem;
 }
 
 .screen6-content {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.5rem;
+    max-width: 800px;
 }
 
-.config-section {
+/* Config Cards */
+.config-card {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15);
+    border: 1px solid #e5e7eb;
+}
+
+.config-card-header {
     display: flex;
-    flex-direction: column;
-}
-
-.config-section.toggles {
-    padding-top: 1.5rem;
-    border-top: 1px solid #e5e7eb;
+    align-items: flex-start;
     gap: 1rem;
+    margin-bottom: 1.5rem;
 }
 
-.config-label {
-    display: block;
-    font-size: 0.875rem;
+.config-card-icon {
+    width: 1.5rem;
+    height: 1.5rem;
+    color: #3b82f6;
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+}
+
+.config-card-title {
+    font-size: 1.125rem;
     font-weight: 600;
-    color: #374151;
-    margin-bottom: 1rem;
+    color: #111827;
+    margin: 0 0 0.25rem 0;
 }
 
+.config-card-description {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0;
+}
+
+/* Threshold */
+.threshold-display {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    padding: 1.5rem;
+    background: linear-gradient(135deg, #eff6ff 0%, #f0f9ff 100%);
+    border-radius: 0.75rem;
+}
+
+.threshold-value {
+    font-size: 3rem;
+    font-weight: 700;
+    color: #2563eb;
+    font-family: 'JetBrains Mono', monospace;
+}
+
+.threshold-hint {
+    font-size: 0.875rem;
+    color: #6b7280;
+    margin: 0.5rem 0 0 0;
+}
+
+/* Slider */
 .slider-container {
     position: relative;
 }
@@ -64,6 +118,13 @@
     border-radius: 50%;
     background-color: #3b82f6;
     cursor: pointer;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
+    transition: all 0.2s;
+}
+
+.slider::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.6);
 }
 
 .slider::-moz-range-thumb {
@@ -73,37 +134,33 @@
     background-color: #3b82f6;
     cursor: pointer;
     border: none;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, 0.4);
 }
 
 .slider-markers {
     display: flex;
     justify-content: space-between;
     font-size: 0.75rem;
-    color: #6b7280;
+    color: #9ca3af;
     margin-top: 0.5rem;
+    font-family: 'JetBrains Mono', monospace;
 }
 
-.threshold-display {
-    text-align: center;
-    margin-top: 1rem;
-}
-
-.threshold-value {
-    font-size: 1.875rem;
-    font-weight: 700;
-    color: #2563eb;
-}
-
-.threshold-hint {
-    font-size: 0.875rem;
-    color: #6b7280;
-    margin: 0.25rem 0 0 0;
+/* Toggles */
+.toggles-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
 }
 
 .toggle-item {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    background: #f9fafb;
+    border-radius: 0.75rem;
 }
 
 .toggle-info {
@@ -120,6 +177,7 @@
     font-size: 0.875rem;
     color: #6b7280;
     margin: 0;
+    line-height: 1.5;
 }
 
 .toggle {
@@ -131,6 +189,7 @@
     cursor: pointer;
     transition: background-color 0.2s;
     background-color: #d1d5db;
+    flex-shrink: 0;
 }
 
 .toggle.active {
@@ -146,52 +205,32 @@
     background-color: white;
     border-radius: 50%;
     transition: transform 0.2s;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .toggle-thumb.active {
     transform: translateX(1.5rem);
 }
 
-.save-button {
-    width: 100%;
-    background-color: #2563eb;
-    color: white;
-    padding: 1rem 1.5rem;
-    border-radius: 0.5rem;
-    font-size: 1.125rem;
-    font-weight: 600;
-    border: none;
-    cursor: pointer;
-    transition: background-color 0.2s;
+/* Info Card */
+.config-info-card {
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.5rem;
+    align-items: flex-start;
+    gap: 0.75rem;
+    padding: 1rem;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 0.75rem;
+    color: #1e40af;
+    font-size: 0.875rem;
+    line-height: 1.5;
 }
 
-.save-button:hover {
-    background-color: #1d4ed8;
+.config-info-card p {
+    margin: 0;
 }
 
-.save-icon {
-    width: 1.25rem;
-    height: 1.25rem;
-}
-
-.save-hint {
-    font-size: 0.75rem;
-    color: #6b7280;
-    text-align: center;
-    margin: 0.5rem 0 0 0;
-}
-
-.save-success {
-    margin-top: 1rem;
-    padding: 0.75rem;
-    background-color: #d1fae5;
-    border: 1px solid #86efac;
-    border-radius: 0.5rem;
-    color: #166534;
-    font-weight: 600;
-    text-align: center;
+.config-info-card svg {
+    flex-shrink: 0;
+    margin-top: 0.1rem;
 }

@@ -1,7 +1,8 @@
 import React from 'react';
 import { AlertTriangle, RotateCcw } from 'lucide-react';
 import ImagePreview from '../../components/ImagePreview/ImagePreview';
-import ProgressBar from '../../components/ProgressBar/ProgressBar';
+import ResultCard from '../../components/UI/ResultCard';
+import PrimaryButton from '../../components/UI/PrimaryButton';
 import './ScreenSuggestive.css';
 
 const ScreenSuggestive = ({ moderationResult, imageUrl, onReset }) => {
@@ -58,24 +59,17 @@ const ScreenSuggestive = ({ moderationResult, imageUrl, onReset }) => {
                     </div>
 
                     <div className="screen-suggestive-bars">
-                        {displayCategories.slice(0, 5).map((category, index) => (
-                            <ProgressBar
-                                key={index}
-                                label={category.label}
-                                value={category.value}
-                                color={category.color}
-                            />
-                        ))}
+                        <ResultCard labels={result.labels.slice(0, 5)} />
                     </div>
 
                     <div className="screen-suggestive-info">
                         <p>Este contenido no viola las políticas pero requiere advertencia de edad.</p>
                     </div>
 
-                    <button className="screen-suggestive-button" onClick={onReset}>
-                        <RotateCcw size={18} style={{ marginRight: '8px' }} />
+                    <PrimaryButton onClick={onReset} style={{ width: '100%', marginTop: '1rem' }}>
+                        <RotateCcw size={18} />
                         Analizar otra imagen
-                    </button>
+                    </PrimaryButton>
                 </div>
             </div>
         </div>

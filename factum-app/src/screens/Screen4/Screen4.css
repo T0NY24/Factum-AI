@@ -24,9 +24,13 @@
 }
 
 .screen4-image {
-    background-color: #1f2937;
-    border-radius: 0.5rem;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(to bottom right, #fee2e2, #fecaca);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    min-height: 400px;
 }
 
 .screen4-results {

@@ -1,0 +1,14 @@
+.security-card {
+    background: white;
+    border-radius: 1rem;
+    /* Sombra azulada sutil en lugar de negra */
+    box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(229, 231, 235, 0.5);
+    transition: transform 0.2s ease;
+    padding: 1.5rem;
+}
+
+.security-card:hover {
+    transform: translateY(-5px);
+    /* Se levanta al pasar el mouse */
+}

@@ -1,10 +1,29 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import ProgressSteps from '../../components/ProgressSteps/ProgressSteps';
 import { useModeration } from '../../hooks/useModeration';
 import './Screen2.css';
 
 const Screen2 = ({ imageData, onAnalysisComplete, onNavigate }) => {
     const { analyzing, result, steps, analyzeImage } = useModeration();
+
+    const [loadingMessage, setLoadingMessage] = useState('Consultando Rekognition...');
+
+    useEffect(() => {
+        const messages = [
+            "Escaneando geometría facial...",
+            "Detectando patrones de piel...",
+            "Analizando vectores de violencia...",
+            "Calculando probabilidad de riesgo..."
+        ];
+        let currentIndex = 0;
+
+        const intervalId = setInterval(() => {
+            setLoadingMessage(messages[currentIndex]);
+            currentIndex = (currentIndex + 1) % messages.length;
+        }, 800);
+
+        return () => clearInterval(intervalId);
+    }, []);
 
     useEffect(() => {
         if (imageData && imageData.key) {
@@ -40,7 +59,7 @@ const Screen2 = ({ imageData, onAnalysisComplete, onNavigate }) => {
                 </div>
 
                 <div className="screen2-footer">
-                    <p className="screen2-text">Procesando de forma segura con IA</p>
+                    <p className="screen2-text">{loadingMessage}</p>
                     <div className="screen2-dots">
                         <div className="dot" style={{ animationDelay: '0s' }}></div>
                         <div className="dot" style={{ animationDelay: '0.1s' }}></div>

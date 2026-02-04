@@ -1,0 +1,51 @@
+.confidence-badge {
+    padding: 0.25rem 0.75rem;
+    /* px-3 py-1 */
+    border-radius: 9999px;
+    /* rounded-full */
+    font-size: 0.75rem;
+    /* text-xs */
+    font-weight: 700;
+    /* font-bold */
+    border: 1px solid;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    /* gap-2 */
+    width: fit-content;
+}
+
+.confidence-dot {
+    width: 0.5rem;
+    /* w-2 */
+    height: 0.5rem;
+    /* h-2 */
+    border-radius: 50%;
+    background-color: currentColor;
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+.badge-green {
+    background-color: var(--color-green-50);
+    /* bg-green-100 approx */
+    color: var(--color-green-700);
+    border-color: var(--color-green-100);
+    /* border-green-200 approx */
+}
+
+.badge-yellow {
+    background-color: #fef9c3;
+    /* bg-yellow-100 */
+    color: #a16207;
+    /* text-yellow-700 */
+    border-color: #fef08a;
+    /* border-yellow-200 */
+}
+
+.badge-red {
+    background-color: var(--color-red-50);
+    /* bg-red-100 approx */
+    color: var(--color-red-700);
+    border-color: var(--color-red-100);
+    /* border-red-200 approx */
+}

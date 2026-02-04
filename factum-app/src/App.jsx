@@ -1,4 +1,6 @@
 import { useState } from 'react';
+import { AnimatePresence, motion } from 'framer-motion';
+import { Toaster } from 'sonner';
 import Navigation from './components/Navigation/Navigation';
 import Screen1 from './screens/Screen1/Screen1';
 import Screen2 from './screens/Screen2/Screen2';
@@ -7,10 +9,12 @@ import Screen4 from './screens/Screen4/Screen4';
 import Screen5 from './screens/Screen5/Screen5';
 import Screen6 from './screens/Screen6/Screen6';
 import ScreenSuggestive from './screens/ScreenSuggestive/ScreenSuggestive';
+import DecryptSplashScreen from './components/SplashScreen/DecryptSplashScreen';
 import { saveToHistory } from './services/historyService';
 import './App.css';
 
 function App() {
+  const [loading, setLoading] = useState(true);
   const [currentScreen, setCurrentScreen] = useState(1);
   const [imageData, setImageData] = useState(null);
   const [moderationResult, setModerationResult] = useState(null);
@@ -138,54 +142,138 @@ function App() {
 
   return (
     <div className="app">
-      {/* Navigation */}
-      <Navigation currentScreen={currentScreen} onNavigate={handleNavigate} />
+      <AnimatePresence mode="wait">
+        {loading ? (
+          <DecryptSplashScreen key="splash" onComplete={() => setLoading(false)} />
+        ) : (
+          <motion.div
+            key="main-app"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+          >
+            {/* Navigation */}
+            <Navigation currentScreen={currentScreen} onNavigate={handleNavigate} />
 
-      {/* Main Content */}
-      <main className="app-content">
-        {currentScreen === 1 && (
-          <Screen1
-            onNavigate={handleNavigate}
-            onImageSelected={handleImageSelected}
-          />
+            {/* Main Content */}
+            <main className="app-content">
+              <Toaster richColors position="bottom-center" />
+              <AnimatePresence mode="wait">
+                {currentScreen === 1 && (
+                  <motion.div
+                    key="screen1"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ width: '100%', height: '100%' }}
+                  >
+                    <Screen1
+                      onNavigate={handleNavigate}
+                      onImageSelected={handleImageSelected}
+                    />
+                  </motion.div>
+                )}
+
+                {currentScreen === 2 && (
+                  <motion.div
+                    key="screen2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ width: '100%', height: '100%' }}
+                  >
+                    <Screen2
+                      imageData={imageData}
+                      onAnalysisComplete={handleAnalysisComplete}
+                      onNavigate={handleNavigate}
+                    />
+                  </motion.div>
+                )}
+
+                {currentScreen === 3 && (
+                  <motion.div
+                    key="screen3"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ width: '100%', height: '100%' }}
+                  >
+                    <Screen3
+                      moderationResult={moderationResult}
+                      imageUrl={imageData?.url}
+                      onReset={handleReset}
+                    />
+                  </motion.div>
+                )}
+
+                {currentScreen === 4 && (
+                  <motion.div
+                    key="screen4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ width: '100%', height: '100%' }}
+                  >
+                    <Screen4
+                      moderationResult={moderationResult}
+                      imageUrl={imageData?.url}
+                      onReset={handleReset}
+                    />
+                  </motion.div>
+                )}
+
+                {currentScreen === 5 && (
+                  <motion.div
+                    key="screen5"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ width: '100%', height: '100%' }}
+                  >
+                    <Screen5 />
+                  </motion.div>
+                )}
+
+                {currentScreen === 6 && (
+                  <motion.div
+                    key="screen6"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ width: '100%', height: '100%' }}
+                  >
+                    <Screen6 />
+                  </motion.div>
+                )}
+
+                {currentScreen === 7 && (
+                  <motion.div
+                    key="screen7"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ duration: 0.3 }}
+                    style={{ width: '100%', height: '100%' }}
+                  >
+                    <ScreenSuggestive
+                      moderationResult={moderationResult}
+                      imageUrl={imageData?.url}
+                      onReset={handleReset}
+                    />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </main>
+          </motion.div>
         )}
-
-        {currentScreen === 2 && (
-          <Screen2
-            imageData={imageData}
-            onAnalysisComplete={handleAnalysisComplete}
-            onNavigate={handleNavigate}
-          />
-        )}
-
-        {currentScreen === 3 && (
-          <Screen3
-            moderationResult={moderationResult}
-            imageUrl={imageData?.url}
-            onReset={handleReset}
-          />
-        )}
-
-        {currentScreen === 4 && (
-          <Screen4
-            moderationResult={moderationResult}
-            imageUrl={imageData?.url}
-            onReset={handleReset}
-          />
-        )}
-
-        {currentScreen === 5 && <Screen5 />}
-
-        {currentScreen === 6 && <Screen6 />}
-
-        {currentScreen === 7 && (
-          <ScreenSuggestive
-            moderationResult={moderationResult}
-            imageUrl={imageData?.url}
-            onReset={handleReset}
-          />
-        )}
-      </main>
+      </AnimatePresence>
     </div>
   );
 }

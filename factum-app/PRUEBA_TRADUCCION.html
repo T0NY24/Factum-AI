@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Prueba de Traducción</title>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            padding: 40px;
+            background: #f8fafc;
+        }
+
+        .test-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px -10px rgba(59, 130, 246, 0.15);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .label-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #f9fafb;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .badge-green {
+            background: #f0fdf4;
+            color: #15803d;
+            border-color: #dcfce7;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: currentColor;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        h2 {
+            color: #111827;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test-card">
+        <h2>✅ Prueba de Componentes Nuevos</h2>
+        <p style="color: #6b7280; margin-bottom: 20px;">
+            Si ves ESPAÑOL abajo, las traducciones funcionan. Si ves badges con colores, los estilos funcionan.
+        </p>
+
+        <div id="results"></div>
+    </div>
+
+    <script type="module">
+        // Importar la función de traducción
+        import { translateLabel } from './src/utils/translations.js';
+
+        // Datos de prueba
+        const testLabels = [
+            { Name: 'Suggestive', Confidence: 95.5 },
+            { Name: 'Female', Confidence: 99.2 },
+            { Name: 'Swimwear', Confidence: 87.3 },
+            { Name: 'Person', Confidence: 99.8 }
+        ];
+
+        const resultsDiv = document.getElementById('results');
+
+        testLabels.forEach(label => {
+            const translated = translateLabel(label.Name);
+            const row = document.createElement('div');
+            row.className = 'label-row';
+            row.innerHTML = `
+                <span style="font-weight: 500; color: #374151; text-transform: capitalize;">
+                    ${translated}
+                </span>
+                <span class="badge badge-green">
+                    <span class="dot"></span>
+                    ${label.Confidence.toFixed(1)}% CONFIDENCE
+                </span>
+            `;
+            resultsDiv.appendChild(row);
+        });
+    </script>
+</body>
+
+</html>

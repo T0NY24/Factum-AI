@@ -1,0 +1,40 @@
+.primary-btn {
+    padding: 0.75rem 1.5rem;
+    /* px-6 py-3 */
+    border-radius: 0.5rem;
+    /* rounded-lg */
+    font-weight: 600;
+    /* font-semibold */
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.3), 0 4px 6px -2px rgba(59, 130, 246, 0.15);
+    /* shadow-lg shadow-blue-500/30 */
+    transition: background-color 0.2s;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.primary-btn:not(:disabled) {
+    background-color: var(--color-blue-600);
+    /* bg-blue-600 */
+    color: white;
+}
+
+.primary-btn:not(:disabled):hover {
+    background-color: var(--color-blue-500);
+    /* hover:bg-blue-500 (approx lighter) */
+    /* Note: Ideally define --color-blue-500 if not exists, or hardcode #3b82f6 */
+    background-color: #3b82f6;
+}
+
+.primary-btn:disabled {
+    background-color: var(--color-gray-300);
+    /* bg-gray-300 */
+    color: var(--color-gray-500);
+    /* text-gray-500 */
+    cursor: not-allowed;
+    box-shadow: none;
+}

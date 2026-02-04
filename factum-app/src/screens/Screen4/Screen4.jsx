@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { X, RotateCcw } from 'lucide-react';
 import ImagePreview from '../../components/ImagePreview/ImagePreview';
-import ProgressBar from '../../components/ProgressBar/ProgressBar';
+import ResultCard from '../../components/UI/ResultCard';
+import PrimaryButton from '../../components/UI/PrimaryButton';
 import './Screen4.css';
 
 const Screen4 = ({ moderationResult, imageUrl, onReset }) => {
@@ -65,21 +66,14 @@ const Screen4 = ({ moderationResult, imageUrl, onReset }) => {
                     </div>
 
                     <div className="screen4-bars">
-                        {displayCategories.slice(0, 5).map((category, index) => (
-                            <ProgressBar
-                                key={index}
-                                label={category.label}
-                                value={category.value}
-                                color={category.color}
-                            />
-                        ))}
+                        <ResultCard labels={result.labels.slice(0, 5)} />
                     </div>
 
                     <div className="screen4-actions">
-                        <button className="screen4-button primary" onClick={onReset}>
-                            <RotateCcw size={18} style={{ marginRight: '8px' }} />
+                        <PrimaryButton onClick={onReset} style={{ width: '100%' }}>
+                            <RotateCcw size={18} />
                             Analizar otra imagen
-                        </button>
+                        </PrimaryButton>
                     </div>
                 </div>
             </div>
