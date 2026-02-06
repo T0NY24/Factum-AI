@@ -7,7 +7,7 @@ const DecryptSplashScreen = ({ onComplete }) => {
     const [isTextDone, setIsTextDone] = useState(false);
 
     const { ref, replay } = useScramble({
-        text: 'FACTUM AI',
+        text: 'ETICA VISUAL EC',
         speed: 0.5,
         tick: 1,
         step: 1,
@@ -43,7 +43,7 @@ const DecryptSplashScreen = ({ onComplete }) => {
                     className="decrypt-subtitle-container"
                 >
                     <p className="decrypt-subtitle">
-                        Sistema de Análisis Forense
+                        Contenido Limpio,Web Segura
                     </p>
 
                     {/* Pequeña barra de carga azul */}
