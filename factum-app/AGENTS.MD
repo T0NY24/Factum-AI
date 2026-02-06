@@ -17,7 +17,8 @@
 9. [Servicios y Utilidades](#9-servicios-y-utilidades)
 10. [Configuración de Variables de Entorno](#10-configuración-de-variables-de-entorno)
 11. [Guía de Despliegue](#11-guía-de-despliegue)
-12. [Solución de Problemas](#12-solución-de-problemas)
+12. [Despliegue en Producción](#12-despliegue-en-producción)
+13. [Solución de Problemas](#13-solución-de-problemas)
 
 ---
 
@@ -119,6 +120,8 @@ Permite a plataformas web y aplicaciones moderar automáticamente imágenes subi
 | **Axios** | 1.7.9 | Cliente HTTP para llamadas a API |
 | **Lucide React** | 0.562.0 | Librería de iconos |
 | **React Dropzone** | 14.3.5 | Componente drag & drop |
+| **Framer Motion** | 12.31.0 | Biblioteca de animaciones |
+| **Sonner** | 2.0.7 | Sistema de notificaciones toast |
 
 ### Backend (AWS)
 
@@ -1007,13 +1010,206 @@ npm run build
 
 ### Opciones de Hosting
 
-1. **AWS Amplify**: Conexión directa a GitHub
-2. **AWS S3 + CloudFront**: Hosting estático
-3. **Vercel/Netlify**: Integración sencilla
+1. **Vercel** (Actual en producción)
+2. **AWS Amplify**: Conexión directa a GitHub
+3. **AWS S3 + CloudFront**: Hosting estático
+4. **Netlify**: Alternativa moderna
 
 ---
 
-## 12. Solución de Problemas
+## 12. Despliegue en Producción
+
+### Información de Producción
+
+**Factum AI** está actualmente desplegado en producción y accesible públicamente:
+
+- 🌐 **URL Principal**: [https://factum-ia.com](https://factum-ia.com)
+- 🚀 **Plataforma de Hosting**: Vercel
+- 📡 **Dominio**: factum-ia.com (registrado en Namecheap)
+- 🔗 **API Backend**: AWS API Gateway (us-east-2)
+
+### Arquitectura de Despliegue
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    factum-ia.com                            │
+│                 (Dominio en Namecheap)                      │
+└───────────────────────────┬─────────────────────────────────┘
+                            │ DNS apunta a
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                        VERCEL                               │
+│                  (Hosting Frontend)                         │
+│                                                             │
+│  • Build automático desde Git                              │
+│  • CDN global                                               │
+│  • SSL/TLS automático                                       │
+│  • Variables de entorno configuradas                        │
+└───────────────────────────┬─────────────────────────────────┘
+                            │ API calls
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    AWS SERVICIOS                            │
+│                   (Region: us-east-2)                       │
+│                                                             │
+│  ┌──────────────────┐  ┌──────────────────┐               │
+│  │  API Gateway     │  │   Lambda         │               │
+│  │  (Prod Stage)    │──│   Functions      │               │
+│  └──────────────────┘  └──────────────────┘               │
+│                                                             │
+│  ┌──────────────────┐  ┌──────────────────┐               │
+│  │  S3 Bucket       │  │  Rekognition     │               │
+│  │  (Images)        │  │  (AI Analysis)   │               │
+│  └──────────────────┘  └──────────────────┘               │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### Configuración de Vercel
+
+#### Build Settings
+
+```bash
+# Framework Preset
+Framework: Vite
+
+# Build Command
+npm run build
+
+# Output Directory
+dist
+
+# Install Command
+npm install
+```
+
+#### Variables de Entorno en Vercel
+
+En el panel de Vercel → Settings → Environment Variables:
+
+| Variable | Valor | Entorno |
+|----------|-------|----------|
+| `VITE_API_GATEWAY_URL` | `https://sjrqtfqq3k.execute-api.us-east-2.amazonaws.com/prod` | Production |
+| `VITE_AWS_REGION` | `us-east-2` | Production |
+| `VITE_S3_BUCKET_NAME` | `factum-content-moderation` | Production |
+
+#### Configuración del Dominio en Namecheap
+
+**Dominio**: factum-ia.com
+
+**Configuración DNS**:
+
+1. **Tipo A**: Apunta a los IPs de Vercel
+2. **Tipo CNAME**: `www` → `cname.vercel-dns.com`
+
+**Pasos de configuración**:
+
+1. En Namecheap:
+   - Dashboard → Domain List → factum-ia.com → Manage
+   - Advanced DNS → Host Records
+   - Agregar registros según Vercel
+
+2. En Vercel:
+   - Project Settings → Domains
+   - Add Domain: `factum-ia.com`
+   - Add Domain: `www.factum-ia.com`
+   - Copiar configuración DNS proporcionada
+
+3. Esperar propagación DNS (puede tomar 24-48 horas)
+
+### Despliegue Continuo
+
+Vercel está configurado con **despliegue automático**:
+
+- ✅ **Push a main** → Deploy automático a producción
+- ✅ **Pull Request** → Preview deployment automático
+- ✅ **Rollback** → Restaurar a versión anterior desde dashboard
+
+### Monitoreo y Analytics
+
+**Vercel Analytics** está habilitado para:
+- Métricas de rendimiento (Core Web Vitals)
+- Visitantes únicos
+- Páginas vistas
+- Tiempo de carga
+
+**AWS CloudWatch** monitorea:
+- Invocaciones de Lambda
+- Errores en las funciones
+- Uso de Rekognition
+- Transferencias en S3
+
+### URLs de Acceso
+
+| Entorno | URL | Propósito |
+|---------|-----|----------|
+| **Producción** | [https://factum-ia.com](https://factum-ia.com) | Aplicación principal |
+| **Producción (www)** | [https://www.factum-ia.com](https://www.factum-ia.com) | Alias con www |
+| **Preview (Vercel)** | `https://factum-app-*.vercel.app` | Despliegues de preview |
+| **Local** | `http://localhost:5173` | Desarrollo local |
+
+### Proceso de Actualización
+
+Para desplegar cambios a producción:
+
+```bash
+# 1. Desarrollo local
+npm run dev
+# Hacer cambios y probar localmente
+
+# 2. Commit y push
+git add .
+git commit -m "feat: descripción del cambio"
+git push origin main
+
+# 3. Vercel despliega automáticamente
+# Monitorear en: https://vercel.com/dashboard
+```
+
+### Configuración de AWS Backend
+
+#### S3 Bucket: `factum-content-moderation`
+
+```json
+{
+  "Región": "us-east-2",
+  "Carpetas": {
+    "uploads/": "Imágenes subidas por usuarios (temporal)"
+  },
+  "CORS": "Configurado para aceptar requests desde factum-ia.com",
+  "Lifecycle": "Eliminar objetos después de 7 días"
+}
+```
+
+#### API Gateway
+
+```
+URL Base: https://sjrqtfqq3k.execute-api.us-east-2.amazonaws.com/prod
+
+Endpoints:
+  POST /presigned-url  → Lambda: get-presigned-url
+  POST /moderate       → Lambda: moderate-image
+
+CORS: Habilitado
+Autenticación: API Key (opcional)
+```
+
+#### Lambda Functions
+
+**Función 1: get-presigned-url**
+- Runtime: Node.js 18.x
+- Memoria: 256 MB
+- Timeout: 10 segundos
+- Rol IAM: Permisos S3:PutObject
+
+**Función 2: moderate-image**
+- Runtime: Node.js 18.x
+- Memoria: 512 MB
+- Timeout: 30 segundos
+- Rol IAM: Permisos S3:GetObject, Rekognition:DetectModerationLabels
+
+---
+
+## 13. Solución de Problemas
 
 ### Error: CORS en API Gateway
 
@@ -1097,5 +1293,7 @@ npm run build
 
 ---
 
-**Última actualización**: 2025-01-26  
-**Versión**: 3.0.0 (Actualización completa con sistema 3-tier)
+**Última actualización**: 2026-02-05  
+**Versión**: 4.0.0  
+**Estado**: En producción en https://factum-ia.com  
+**Hosting**: Vercel + AWS (us-east-2)
