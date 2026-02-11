@@ -3,9 +3,7 @@ import { SCREEN_NAMES } from '../../utils/constants';
 import './Navigation.css';
 
 const Navigation = ({ currentScreen, onNavigate }) => {
-    // Solo mostrar pantallas navegables manualmente: Upload (1), Historial (5), Config (6)
-    // Las pantallas 2, 3, 4 son transicionales y el flujo las controla automáticamente
-    const navigableScreens = [1, 5, 6];
+    const navigableScreens = [1, 2, 3];
     const screens = navigableScreens.map(id => ({
         id,
         name: SCREEN_NAMES[id]
@@ -14,7 +12,14 @@ const Navigation = ({ currentScreen, onNavigate }) => {
     return (
         <div className="navigation-container">
             <div className="navigation-content">
-                <h1 className="navigation-title">AWS Rekognition - Content Moderation</h1>
+                <div className="navigation-header">
+                    <h1 className="navigation-title">ÉTICA VISUAL EC - Contenido Moderado</h1>
+                    <img 
+                        src="https://www.uide.edu.ec/wp-content/uploads/2025/06/logo-uide.webp" 
+                        alt="Logo UIDE" 
+                        className="navigation-logo"
+                    />
+                </div>
                 <div className="navigation-buttons">
                     {screens.map(screen => (
                         <button
