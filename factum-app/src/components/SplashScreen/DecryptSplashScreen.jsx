@@ -7,7 +7,7 @@ const DecryptSplashScreen = ({ onComplete }) => {
     const [isTextDone, setIsTextDone] = useState(false);
 
     const { ref, replay } = useScramble({
-        text: 'ETICA VISUAL EC',
+        text: 'ÉTICA VISUAL EC',
         speed: 0.5,
         tick: 1,
         step: 1,
