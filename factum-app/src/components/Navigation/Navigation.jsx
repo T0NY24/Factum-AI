@@ -3,7 +3,7 @@ import { SCREEN_NAMES } from '../../utils/constants';
 import './Navigation.css';
 
 const Navigation = ({ currentScreen, onNavigate }) => {
-    const navigableScreens = [1, 2, 3];
+    const navigableScreens = [1, 5, 6];
     const screens = navigableScreens.map(id => ({
         id,
         name: SCREEN_NAMES[id]
@@ -21,13 +21,13 @@ const Navigation = ({ currentScreen, onNavigate }) => {
                     />
                 </div>
                 <div className="navigation-buttons">
-                    {screens.map(screen => (
+                    {screens.map((screen, index) => (
                         <button
                             key={screen.id}
                             onClick={() => onNavigate(screen.id)}
                             className={`nav-button ${currentScreen === screen.id ? 'active' : ''}`}
                         >
-                            {screen.id}. {screen.name}
+                            {index + 1}. {screen.name}
                         </button>
                     ))}
                 </div>
