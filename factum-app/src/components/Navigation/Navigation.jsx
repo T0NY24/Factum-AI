@@ -21,13 +21,13 @@ const Navigation = ({ currentScreen, onNavigate }) => {
                     />
                 </div>
                 <div className="navigation-buttons">
-                    {screens.map(screen => (
+                    {screens.map((screen, index) => (
                         <button
                             key={screen.id}
                             onClick={() => onNavigate(screen.id)}
                             className={`nav-button ${currentScreen === screen.id ? 'active' : ''}`}
                         >
-                            {screen.id}. {screen.name}
+                            {index + 1}. {screen.name}
                         </button>
                     ))}
                 </div>
