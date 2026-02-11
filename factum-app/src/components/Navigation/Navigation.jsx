@@ -3,7 +3,7 @@ import { SCREEN_NAMES } from '../../utils/constants';
 import './Navigation.css';
 
 const Navigation = ({ currentScreen, onNavigate }) => {
-    const navigableScreens = [1, 2, 3];
+    const navigableScreens = [1, 5, 6];
     const screens = navigableScreens.map(id => ({
         id,
         name: SCREEN_NAMES[id]
